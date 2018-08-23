@@ -1,0 +1,273 @@
+{% extends 'layout.html' %}
+{% block body %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/2.9.3/intro.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/2.9.3/intro.min.js"></script>
+<link rel="stylesheet" src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/2.9.3/introjs-rtl.css">
+<link rel="stylesheet" src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/2.9.3/introjs-rtl.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intro.js/2.9.3/introjs.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intro.js/2.9.3/introjs.min.css">
+<!--<main role="main" style="max-width:1400px"> -->
+<!-- Main jumbotron for a primary marketing message or call to action -->
+<div class="jumbotron" style="width:1300px">
+   <div class="container" style="width:1300px;">
+      <h1 class="display-3" style="text-align:center">Main Recommendations Panel!</h1>
+      <p></p>
+      <!-- <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p> -->
+   </div>
+</div>
+<div id="loading" ></div>
+<div id= "content">
+   <div class="container-fluid" style="max-width:1400px">
+      <!-- Example row of columns -->
+      <div class="row" style="width:1300px">
+         <div class="col-md-4" id="panel_1">
+            <div class="panel_1">
+               <form method="POST" action="/recommendations_2" id="panel_1_form">
+                  <h2>Initial Recommendations!</h2>
+                  </div>
+                  <p style="text-align: justify; style=font-size:15px">Here are your first set of recommendations! Click on the IMDB link next to the movie to know more about it! </p>
+                  <p></p>
+                  <p style="text-align: justify; style=font-size:15px">Next step, is to select the movies you are most familiar with (seen the movie). You can also select the movies which interest you the most! Click on <span class="label label-primary">Next Step</span> once you are done!</p>
+                  {% for movie in recommendation_details %}
+                  <div class="form-check" style="font-size:14px" id="div_1">
+                     <input  type="checkbox" name="imdb_detail" value='{{ movie.imdb_id }}' > <!--class="form-check-input" -->
+                     <label class="form-check-label" for="defaultCheck1" style="font-size:14px">
+                     {{ movie.movie_title }}
+                     <button type="button" class = "btn btn-default" onclick="window.open('http://www.imdb.com/title/tt'+'{{ movie.imdb_id }}')" target="_blank">IMDB</button>
+                     </label>
+                     <p></p>
+                  </div>
+                  {% endfor %}
+
+                  <div style="text-align: center">
+                     <button type="submit" class="btn btn-primary" id="panel_1_button" >Next Step</button>
+                  </div>
+                  <p></p>
+                  <!-- <p><a type="submit" class="btn btn-secondary" role="button">View details &raquo;</a></p> -->
+               </form>
+
+         </div>
+         <div class="col-md-4" id="panel_2" >
+            <div class="panel_2">
+               <form method="POST" action="/recommendations_3" id="panel_2_form">
+                  <h2>Twitter Users similar to you!</h2>
+                  </div>
+                  <p style="text-align: justify; style=font-size:15px">Great! Now that you have selected your favorite movies, next step is to select the Twitter users that interest you the most.</p>
+                  <p></p>
+                  <p style="text-align: justify; style=font-size:15px">The Slider below helps to display the list of relevant Twitter users based on how similar they are to you. These are users who can be of most interest to you and may be able to help you discover new movies. You can also check their Twitter profile and some of their most favorite movies to get a better idea.</p>
+                  <p></p>
+                  <p style="text-align: justify; style=font-size:15px">You can use the given slider to select the range of users. Please select the Twitter users in the below panel and click on <span class="label label-primary">Next Step</span></p>
+                  <p></p>
+                  <p></p>
+                  <div class="slider">
+                     <label for="LS" class="pull-left" style="font-size:10px">Least Similar</label><input type="range" input tyin min="0" max="1" value="1.0" step="0.1" onChange="sliderChange(this.value)" style="width:270px;" /><label for="MS" class="pull-right" style="font-size:10px">Most Similar</label>
+                     <input type="hidden" id="slider_value" name="slider_value" value="default">
+                  </div>
+                  <div class="master_user_details" id="master_user_details">
+                     <p></p>
+                     <p></p>
+                     <div style="overflow-y: scroll; height:365px;">
+                        {% for user in voter_details %}
+                        <div class="user_details" similarity='{{ user.similiarity_value }}'>
+                           <ul class="list-group">
+                              <li class="list-group-item">
+                                 <input  type="checkbox" name="MT_User" value='{{ user.movie_tweeting_user }}' >
+                                 <button type="button" class = "btn btn-default" onclick="window.open('http://www.twitter.com/'+'{{ user.screen_name }}')" target="_blank">{{ user.screen_name }}</button>  <button type="button" class="btn btn-info">{{ user.similiarity_value }}</button>
+                                 <p><a  target="_blank" name='link_details' href='user_information/{{ user.movie_tweeting_user }}'>Click here for some more movie preferences of this User!</a></p>
+                              </li>
+                           </ul>
+                        </div>
+                        {% endfor %}
+                     </div>
+                  </div>
+                  <p></p>
+                  <!-- <p><input type="button" class="btn btn-secondary" value="Back" onclick="window.history.back()" /></p> -->
+                  {% for user in voter_details %}
+                  <input type="hidden" name="voter_MT_User" value= '{{ user.movie_tweeting_user }}' />
+                  <input type="hidden" name="voter_screen_name" value= '{{ user.screen_name }}' />
+                  <input type="hidden" name="voter_score" value= '{{ user.similiarity_value }}' />
+                  {% endfor %}
+                  {% for movie in current_imdb_values %}
+                  <input type="hidden" name="current_imdb" value= '{{ movie }}' />
+                  {% endfor %}
+
+                  <p></p>
+                  <p></p>
+                  <div style="text-align: center">
+                     <button type="submit" class="btn btn-primary" id="panel_2_button">Next Step</button>
+                  </div>
+                  <p></p>
+               </form>
+
+         </div>
+         <div class="col-md-4" id="panel_3">
+            <form method="POST" action="/evaluation_novelty" id="panel_3_form">
+              <div class="panel_3">
+               <h2>Final Recommendations!</h2>
+               </div>
+               <p>Based on your movie preferences and the selected Twitter users, here are your new movie recommendations. Click on <span class="label label-primary">Proceed</span> to tell us what you think about the recommendations.</p>
+               <div class="form-check" style="font-size:14px">
+                  {% for movie in final_movies%}
+                  <label class="form-check-label" for="defaultCheck1" style="font-size:13px">
+                  {{ movie.title }}
+                  </label>
+                  <button type="button" class = "btn btn-default" onclick="window.open('http://www.imdb.com/title/tt'+'{{ movie.imdb_id }}')" target="_blank">IMDB</button>
+                  <br>
+                  <br>
+                  {% endfor %}
+               </div>
+               <p></p>
+               <input type="hidden" name="selected_twitter_users" value= '{{ twitter_users }}' />
+               <input type="hidden" name="slider_value_selected" value= '{{ slider_value }}' />
+               <input type="hidden" name="current_movies_first_panel" value= '{{ current_movies_first_panel }}' />
+               <div style="text-align: center">
+                  <button type="submit" class="btn btn-primary" id="panel_3_button">Proceed</button>
+               </div>
+               <p></p>
+            </form>
+         </div>
+      </div>
+   </div>
+</div>
+<style type="text/css" scoped>
+   .slider {
+   display: relative;
+   }
+   div#loading {
+   position: absolute;
+   left: 80%;
+   width: 300px;
+   height: 300px;
+   display: none;
+   background: url(/static/ajax-loader.gif) no-repeat;
+   cursor: wait;
+   top: 0;
+   bottom: 0;
+   left: 100px;
+   right: 0;
+   margin: auto;
+   text-align: center;
+   }
+   div#temp_id{
+   background-color: yellow;
+   }
+</style>
+<!-- /container -->
+<!--</main> -->
+<script>
+
+   function sliderChange(val) {
+
+     slider_value = val;
+     console.log (slider_value);
+     document.getElementById("slider_value").value = slider_value;
+
+     for (var element of document.getElementsByClassName('user_details')) {
+         if (element.getAttribute('similarity') > val) {
+           element.style.display = 'none';
+         } else {
+           element.style.display = 'inherit';
+         }
+     }
+
+   }
+
+
+   function loading() {
+               $("#loading").show();
+               $("#content").hide();
+           }
+
+
+      check = '{{ check }}'
+
+      console.log ("Value of ")
+      console.log (check)
+
+      window.onload = function() {
+
+        if (check == "panel_1")
+        {
+          document.getElementById("panel_2_button").disabled = true;
+          document.getElementById("panel_3_button").disabled = true;
+
+          var introguide = introJs();
+
+          introguide.setOptions({
+          steps: [
+          {
+            element: '.panel_1',
+            intro: 'PLEASE READ THE FOLLOWING INSTRUCTIONS! Here will be your first set of movie recommendations, generated based on your movie preferences. After selecting your familiar movies, press on Next Step! [1/4]',
+            position: 'right'
+          },
+          {
+            element: '.panel_2',
+            intro: 'Similar Twitter users will be diplayed here. Select the users which you like! Selecting more Twitter users increases the odds of finding more diverse and novel movie recommendations. [2/4]',
+            position: 'left'
+          },
+          {
+            element: '.slider',
+            intro: 'Use the Slider to display least to most similar users. Slide the slider to the left to get least similar users and to the right to display your most similar users. Remember, selecting least similar users can lead to more diversified movie recommendations! [3/4]',
+            position: 'left'
+          },
+          {
+            element: '.panel_3',
+            intro: 'After selecting the Twitter users, a new set of movie recommendations will be displayed here! [4/4]',
+            position: 'left'
+          }
+          ]
+        });
+
+          introguide.start();
+
+
+        }
+        else if (check == "panel_2")
+        {
+          document.getElementById("panel_3_button").disabled = true;
+
+          $('div.master_user_details>div.user_details').each(function(){
+            var show_id = this.id;
+            console.log(show_id);
+          });
+       }
+
+
+      };
+
+
+      $('#panel_1_button').click(function() {
+
+        //$("#panel_1_button").click(function(e){
+        var number_of_checked_checkbox= $("input[name=imdb_detail]:checked").length;
+        if(number_of_checked_checkbox==0){
+          alert("Select atleast one movie!");
+          return false;
+          }
+          else{
+            $("#panel_1_form").submit();
+            loading();
+          }
+
+        });
+      //});
+      $('#panel_2_button').click(function() {
+        //$("#panel_1_button").click(function(e){
+        var number_of_checked_checkbox= $("input[name=MT_User]:checked").length;
+        if(number_of_checked_checkbox==0){
+          alert("Select atleast one Twitter User!");
+          return false;
+          }
+          else{
+            $("#panel_2_form").submit();
+            loading();
+          }
+
+        });
+
+</script>
+{% endblock %}

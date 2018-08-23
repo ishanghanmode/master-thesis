@@ -1,0 +1,35 @@
+{% extends 'layout.html' %}
+{% block body %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+<div class = "page-header">
+   <h1>
+      Twitter User Information
+      <small>Movie Preferences!  </small><button type="button" class = "btn btn-default" onclick="window.open('http://www.twitter.com/'+'{{ twitter_screen_id }}')" target="_blank">{{ twitter_screen_id }}</button>
+   </h1>
+</div>
+   <div class="container">
+      <p style="font-size:18px"><b>Look at some of the most favorite movies of this Twitter User in order to get an idea of their movie choices!</b></p>
+   </div>
+   <div class="container-fluid" style="max-width:1400px">
+      <!-- Example row of columns -->
+      <div class="row" style="width:1300px">
+         <div class="col-md-6" id="panel_1" style="background-color: #f6f6f6">
+            {% for movie in top_n_records %}
+            <div class="form-check" style="font-size:14px" >
+               <label class="form-check-label" for="defaultCheck1" style="font-size:14px">
+               {{ movie.title}}
+               <button type="button" class = "btn btn-default" onclick="window.open('http://www.imdb.com/title/tt'+'{{ movie.imdb_id }}')" target="_blank">IMDB</button> <br>
+               <span class="label label-info">{{ movie.genre }}</span>
+               </label>
+               <p></p>
+            </div>
+            {% endfor %}
+            <p></p>
+            <!-- <p><a type="submit" class="btn btn-secondary" role="button">View details &raquo;</a></p> -->
+         </div>
+       </div>
+     </div>
+{% endblock %}

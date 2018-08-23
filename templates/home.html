@@ -1,0 +1,21 @@
+{% extends 'layout.html' %}
+{% block body %}
+<section class="jumbotron text-center">
+   <div class="container">
+      <h1 class="jumbotron-heading">Welcome to Movie Tweeters!</h1>
+      <p class="lead text-muted">Welcome to this web-based study that examines how using social information in recommender systems can improve the quality of recommended items.</p>
+   </div>
+</section>
+<section class="jumbotron text-center">
+   <div class="container_consentform" style="text-align: left">
+      <h3 class="jumbotron-heading" style="text-align: center">Consent Form</h3>
+      <p class="lead text-muted" style="font-size: 16px" >The purpose of this study is to evaluate how can social information (such as Twitter data) could be effectively incorporated in a movie recommendation system to recommend more novel and diverse movies to users. This evaluation is being conducted by Ishan Ghanmode, MSc student at the TU Delft.<br /><br /> Your participation in this research study is voluntary. You may choose not to participate. If you decide to participate in this study, you may withdraw at any time. If you decide not to participate in this study or if you withdraw from participating at any time, you will not be penalized. If you do not complete the study, it will be treated as a withdrawal and your answers thus far will not be used.<br /><br /> Participation in this study takes approximately 15-20 minutes and involves three steps:<br /> 1. The first step involves answering some basic demographic questions. Your responses will be confidential and we do not collect identifying information, such as your name or email address.<br /> 2. Second step involves interacting with the recommendation system.<br /> 3. The final step is answering user evaluation questions regarding your experience with the system.<br /><br /> All data is stored in a password protected electronic format. To help protect your confidentiality, the study is fully anonymous and we will not store any information that will personally identify you, including IP addresses. The results of this study will only be used for the creation of scholarly publications. If you have any questions about the research study, please contact <a href="mailto:I.Ghanmode@student.tudelft.nl">Ishan Ghanmode</a>.<br /><br /> This research has been reviewed by TU Delft’s Human Research Ethics Committee.<br /><br /> If you are 18 years of age or older, understand the statements above, and freely consent to participate in the study, click on the “I Agree” button to begin the study.</p>
+      <p style="text-align: center">
+         <!-- <div style="text-align: center"> -->
+         <a href="/demographics" class="btn btn-primary my-2" style="background:  grey">I Agree</a>
+         <a href="/goodbye" class="btn btn-secondary my-2">I Disagree</a>
+         <!--</div> -->
+      </p>
+   </div>
+</section>
+{% endblock %}

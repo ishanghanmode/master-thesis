@@ -1,0 +1,87 @@
+{% extends 'layout.html' %}
+{% block body %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<div class = "page-header">
+   <h1>
+      Evaluation
+      <small>[3/4]</small>
+   </h1>
+</div>
+<form method="POST" action="/user_satisfaction" id="form_evaluation">
+   <div class="container">
+      <p style="font-size:17px"><b>1. Please have a look at the movies generated in the two recommendation lists below.<b></p>
+        <div>
+          <h4>From the below two lists, please select movies which suit your personal movie tastes the most! These can be movies which are the most relevant to your move preferences!</h4>
+        </div>
+   </div>
+   <div class="container-fluid" style="max-width:1400px">
+      <!-- Example row of columns -->
+      <div class="row" style="width:1300px">
+         <div class="col-md-5" id="panel_1" style="background-color: #f6f6f6">
+            <h4><b>Recommendation List 1!</b></h4>
+            {% for movie in recommendation_details %}
+            <div class="form-check" style="font-size:14px">
+               <input  type="checkbox" name="recommendations_1" value='{{ movie.imdb_id }}' > <!--class="form-check-input" -->
+               <label class="form-check-label" for="defaultCheck1" style="font-size:14px">
+               {{ movie.movie_title }}
+               <button type="button" class = "btn btn-default" onclick="window.open('http://www.imdb.com/title/tt'+'{{ movie.imdb_id }}')" target="_blank">IMDB</button>
+               </label>
+               <p></p>
+            </div>
+            {% endfor %}
+            <p></p>
+            <!-- <p><a type="submit" class="btn btn-secondary" role="button">View details &raquo;</a></p> -->
+         </div>
+         <div class="col-md-5" id="panel_2" style="background-color: #f6f6f6">
+            <h4><b>Recommendation List 2!</b></h4>
+            {% for movie in final_movies%}
+            <div class="form-check" style="font-size:14px">
+               <input  type="checkbox" name="recommendations_2" value='{{ movie.imdb_id }}' > <!--class="form-check-input" -->
+               <label class="form-check-label" for="defaultCheck1" style="font-size:14px">
+               {{ movie.title }}
+               <button type="button" class = "btn btn-default" onclick="window.open('http://www.imdb.com/title/tt'+'{{ movie.imdb_id }}')" target="_blank">IMDB</button>
+               </label>
+               <p></p>
+            </div>
+            {% endfor %}
+            <p></p>
+         </div>
+      </div>
+   </div>
+   <section>
+      <div class="container">
+         <p></p>
+         <input type="hidden" name="selected_twitter_users" value= '{{ twitter_users }}' />
+         <input type="hidden" name="slider_value_selected" value= '{{ slider_value }}' />
+         <input type="hidden" name="current_imdb_movies" value= '{{ current_imdb_movies }}' />
+         <div style="text-align: center">
+            <button type="submit" class="btn btn-primary" id="Proceed">Next</button>
+         </div>
+         <p></p>
+      </div>
+   </section>
+</form>
+<script>
+   $('#Proceed').click(function() {
+     //$("#panel_1_button").click(function(e){
+     var number_of_checked_checkbox_1 = $("input[name=recommendations_1]:checked").length;
+     var number_of_checked_checkbox_2 = $("input[name=recommendations_2]:checked").length;
+
+
+     if(number_of_checked_checkbox_1 == 0){
+       alert("Select movies which are preferable to your movie tastes from Recommendation List 1!");
+       return false;
+       }
+       else if(number_of_checked_checkbox_2 == 0){
+         alert("Select movies which are preferable to your movie tastes from Recommendation List 2!");
+         return false;
+       }
+       else {
+         $("#form_evaluation").submit();
+       }
+      });
+
+</script>
+{% endblock %}

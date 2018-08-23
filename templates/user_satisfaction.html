@@ -1,0 +1,233 @@
+{% extends 'layout.html' %}
+{% block body %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+<div class = "page-header">
+   <h1>
+      Evaluation
+      <small>[4/4]</small>
+   </h1>
+</div>
+<form method="POST" action="/thank_you" id="form_evaluation">
+   <div class="container">
+      <p style="font-size:18px"><b>The next few questions will help us understand the quality of the recommended items and evaluate overall user satisfaction.</b></p>
+   </div>
+   <div class="container-fluid" style="max-width:1400px">
+      <!-- Example row of columns -->
+      <div class="row" style="width:1300px">
+         <div class="col-md-5" id="panel_1" style="background-color: #f6f6f6">
+            <h4><b>Recommendation List 1!</b></h4>
+            {% for movie in recommendation_details %}
+            <div class="form-check" style="font-size:14px" >
+              <input  type="hidden" name="recommendations_1" value='{{ movie.imdb_id }}' >
+               <label class="form-check-label" for="defaultCheck1" style="font-size:14px">
+               {{ movie.movie_title }}
+               <button type="button" class = "btn btn-default" onclick="window.open('http://www.imdb.com/title/tt'+'{{ movie.imdb_id }}')" target="_blank">IMDB</button> <br>
+               <span class="label label-info">{{ movie.movie_genre }}</span>
+               </label>
+               <p></p>
+            </div>
+            {% endfor %}
+            <p></p>
+            <!-- <p><a type="submit" class="btn btn-secondary" role="button">View details &raquo;</a></p> -->
+         </div>
+         <div class="col-md-5" id="panel_2" style="background-color: #f6f6f6">
+            <h4><b>Recommendation List 2!</b></h4>
+            {% for movie in final_movies%}
+            <div class="form-check" style="font-size:14px">
+              <input  type="hidden" name="recommendations_2" value='{{ movie.imdb_id }}' >
+               <label class="form-check-label" for="defaultCheck1" style="font-size:14px">
+               {{ movie.title }}
+               <button type="button" class = "btn btn-default" onclick="window.open('http://www.imdb.com/title/tt'+'{{ movie.imdb_id }}')" target="_blank">IMDB</button> <br>
+               <span class="label label-info">{{ movie.genre }}</span>
+               </label>
+               <p></p>
+            </div>
+            {% endfor %}
+            <p></p>
+         </div>
+      </div>
+   </div>
+   <section>
+      <div class="container">
+        <div>
+          <h3>Answer the following questions!</h3>
+        </div>
+         <div>
+            <p style="font-size:17px"><b>1. The recommendation system provided me with good movie suggestions (both the recommendation lists):</b></p>
+            <ul class="likert" style="background-color:white">
+               <label class="radio-inline">
+               <input type="radio" name="q_1" value=1 >Strongly Disagree
+               </label>
+               <label class="radio-inline">
+               <input type="radio" name="q_1" value=2 >Disagree
+               </label>
+               <label class="radio-inline">
+               <input type="radio" name="q_1" value=3 >Neutral
+               </label>
+               <label class="radio-inline">
+               <input type="radio" name="q_1" value=4 >Agree
+               </label>
+               <label class="radio-inline">
+               <input type="radio" name="q_1" value=5 >Strongly Agree
+               </label>
+            </ul>
+         </div>
+         <div>
+            <p style="font-size:17px"><b>2. The recommendation system helped me discover new movies (novelty)*:</b></p>
+            <p><b>*Novelty: You have not watched the movie before.<b></p>
+              <ul class="likert" style="background-color:white">
+                 <label class="radio-inline">
+                 <input type="radio" name="q_2" value=1 >Strongly Disagree
+                 </label>
+                 <label class="radio-inline">
+                 <input type="radio" name="q_2" value=2 >Disagree
+                 </label>
+                 <label class="radio-inline">
+                 <input type="radio" name="q_2" value=3 >Neutral
+                 </label>
+                 <label class="radio-inline">
+                 <input type="radio" name="q_2" value=4 >Agree
+                 </label>
+                 <label class="radio-inline">
+                 <input type="radio" name="q_2" value=5 >Strongly Agree
+                 </label>
+              </ul>
+         </div>
+         <div>
+            <p style="font-size:17px"><b>3. The movies recommended to me are diverse*:</b></p>
+            <p><b>*Diverse: The movies can be different in terms of genre, the actors involved, classics/non-classics, superhero movies, language, recent/old movies etc.</b></p>
+            <ul class="likert" style="background-color:white">
+               <label class="radio-inline">
+               <input type="radio" name="q_3" value=1 >Strongly Disagree
+               </label>
+               <label class="radio-inline">
+               <input type="radio" name="q_3" value=2 >Disagree
+               </label>
+               <label class="radio-inline">
+               <input type="radio" name="q_3" value=3 >Neutral
+               </label>
+               <label class="radio-inline">
+               <input type="radio" name="q_3" value=4 >Agree
+               </label>
+               <label class="radio-inline">
+               <input type="radio" name="q_3" value=5 >Strongly Agree
+               </label>
+            </ul>
+         </div>
+         <div>
+            <p style="font-size:17px"><b>4. The recommendation system made me more confident about my selection/decision*:</b></p>
+            <p><b>*The interface made me confident of the process of selecting my most preferred movies and my most relevant Twitter users.</b></p>
+            <ul class="likert" style="background-color:white">
+               <label class="radio-inline">
+               <input type="radio" name="q_4" value=1 >Strongly Disagree
+               </label>
+               <label class="radio-inline">
+               <input type="radio" name="q_4" value=2 >Disagree
+               </label>
+               <label class="radio-inline">
+               <input type="radio" name="q_4" value=3 >Neutral
+               </label>
+               <label class="radio-inline">
+               <input type="radio" name="q_4" value=4 >Agree
+               </label>
+               <label class="radio-inline">
+               <input type="radio" name="q_4" value=5 >Strongly Agree
+               </label>
+            </ul>
+         </div>
+         <div>
+            <p style="font-size:17px"><b>5. I am convinced I will like the movies recommended to me:</b></p>
+            <ul class="likert" style="background-color:white">
+               <label class="radio-inline">
+               <input type="radio" name="q_5" value=1 >Strongly Disagree
+               </label>
+               <label class="radio-inline">
+               <input type="radio" name="q_5" value=2 >Disagree
+               </label>
+               <label class="radio-inline">
+               <input type="radio" name="q_5" value=3 >Neutral
+               </label>
+               <label class="radio-inline">
+               <input type="radio" name="q_5" value=4 >Agree
+               </label>
+               <label class="radio-inline">
+               <input type="radio" name="q_5" value=5 >Strongly Agree
+               </label>
+            </ul>
+         </div>
+         <div>
+            <p style="font-size:17px"><b>6. Overall, I am satisfied with the recommendation system and the interface:</b></p>
+            <ul class="likert" style="background-color:white">
+               <label class="radio-inline">
+               <input type="radio" name="q_6" value=1 >Strongly Disagree
+               </label>
+               <label class="radio-inline">
+               <input type="radio" name="q_6" value=2 >Disagree
+               </label>
+               <label class="radio-inline">
+               <input type="radio" name="q_6" value=3 >Neutral
+               </label>
+               <label class="radio-inline">
+               <input type="radio" name="q_6" value=4 >Agree
+               </label>
+               <label class="radio-inline">
+               <input type="radio" name="q_6" value=5 >Strongly Agree
+               </label>
+            </ul>
+         </div>
+         <p></p>
+         <input type="hidden" name="selected_twitter_users" value= '{{ twitter_users }}' />
+         <input type="hidden" name="slider_value_selected" value= '{{ slider_value }}' />
+         <input type="hidden" name="current_imdb_movies" value= '{{ current_imdb_movies }}' />
+         <div style="text-align: center">
+            <button type="submit" class="btn btn-primary" id="Proceed">Next</button>
+         </div>
+         <p></p>
+      </div>
+   </section>
+</form>
+<script>
+   $('#Proceed').click(function() {
+     //$("#panel_1_button").click(function(e){
+     var number_of_checked_radio_1 = $("input[name=q_1]:checked").length;
+     var number_of_checked_radio_2 = $("input[name=q_2]:checked").length;
+     var number_of_checked_radio_3 = $("input[name=q_3]:checked").length;
+     var number_of_checked_radio_4 = $("input[name=q_4]:checked").length;
+     var number_of_checked_radio_5 = $("input[name=q_5]:checked").length;
+     var number_of_checked_radio_6 = $("input[name=q_6]:checked").length;
+
+
+     if(number_of_checked_radio_1 == 0){
+       alert("Please answer all the questions!");
+       return false;
+       }
+       else if(number_of_checked_radio_2 == 0){
+         alert("Please answer all the questions!");
+         return false;
+       }
+       else if(number_of_checked_radio_3 == 0 ){
+         alert("Please answer all the questions!");
+         return false;
+       }
+       else if(number_of_checked_radio_4 == 0 ){
+         alert("Please answer all the questions!");
+         return false;
+       }
+       else if(number_of_checked_radio_5 == 0 ){
+         alert("Please answer all the questions!");
+         return false;
+       }
+       else if(number_of_checked_radio_6 == 0 ){
+         alert("Please answer all the questions!");
+         return false;
+       }
+       else {
+         $("#form_evaluation").submit();
+       }
+      });
+
+</script>
+{% endblock %}

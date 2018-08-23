@@ -1,0 +1,1287 @@
+{% extends 'layout.html' %}
+{% block body %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+<div id="loading" ></div>
+<div id= "content">
+   <main role="main">
+      <section class="jumbotron text-center">
+         <div class="container">
+            <h3 class="jumbotron-heading">Rate at least 20 movies below on a scale from 1 to 5!</h3>
+            <p class="lead text-muted" style="text-align: center; font-size: 18.5px">Out of the 40 movies given below, please rate at least 20 movies (movies which you have already seen or movies which seem interesting to you) on a scale of 1 to 5, with 1 being the lowest rating and 5 being the highest rating. Your ratings will help us make the initial set of movie predictions for you!</p>
+            <div id="temp_id"><input type="hidden" name="sample_id"> Your Temp ID is: {{ user_id_movielens }}
+            </div>
+            <p></p>
+            <div style="text-align: center"><a href = "">Movies Selected : <span class ="badge" id="count-checked-checkboxes" style="font-size:15px;">0</span> </a></div>
+            <!-- <div class="green"><span class ="badge" id="count-checked-checkboxes">0</span> movies selected!!</div> -->
+         </div>
+      </section>
+      <!-- Change the initial seed items -->
+      <form id="myform" method="post" action="/recommendations">
+         <div class="album py-5 bg-light">
+            <div class="container">
+               <div class="row">
+                  <div class="col-md-3">
+                     <div class="card mb-4 box-shadow" style="width: 250px">
+                        <img class="card-img-top" src="https://image.ibb.co/fqqVQd/Blair_Witch.jpg" alt="Blair_Witch" height="300">
+                        <div class="card-body">
+                           <p class="card-text" style="font-size: 14px">The Blair Witch Project</p>
+                           <input type="hidden" name="id_1" value=2710>
+                           <input type="hidden" name="imdb_1" value='0185937'>
+                           <p>
+                              <span class="starRating">
+                              <input id="rating5" type="radio" name="rating_1" value=1 >
+                              <label for="rating5" style="font-size: 14px">1</label>
+                              <input id="rating4" type="radio" name="rating_1" value=2>
+                              <label for="rating4" style="font-size: 14px">2</label>
+                              <input id="rating3" type="radio" name="rating_1" value=3>
+                              <label for="rating3" style="font-size: 14px">3</label>
+                              <input id="rating2" type="radio" name="rating_1" value=4>
+                              <label for="rating2" style="font-size: 14px">4</label>
+                              <input id="rating1" type="radio" name="rating_1" value=5>
+                              <label for="rating1" style="font-size: 14px">5</label>
+                              <input type="hidden" name="rating_1" value= 0 />
+                              </span>
+                           </p>
+                           <div class="d-flex justify-content-between align-items-center">
+                              <div class="btn-group">
+                                 <button type="button" class="btn btn-sm btn-outline-secondary" onclick=" window.open('https://www.imdb.com/title/tt0185937/','_blank')" target="_blank">IMDB</button>
+                              </div>
+                              <!--  <small class="text-muted">Horror</small> -->
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-md-3">
+                     <div class="card mb-4 box-shadow" style="width: 250px">
+                        <img class="card-img-top" src="https://image.ibb.co/gWm6WJ/Plan_9_Alternative_poster.jpg" alt="Plan_9_Alternative_poster" height="300">
+                        <div class="card-body">
+                           <p class="card-text" style="font-size: 14px">Plan 9 from Outer Space</p>
+                           <input type="hidden" name="id_2" value=1924>
+                           <input type="hidden" name="imdb_2" value='0052077'>
+                           <p>
+                              <span class="starRating">
+                              <input id="rating5" type="radio" name="rating_2" value=1>
+                              <label for="rating5" style="font-size: 14px">1</label>
+                              <input id="rating4" type="radio" name="rating_2" value=2>
+                              <label for="rating4" style="font-size: 14px">2</label>
+                              <input id="rating3" type="radio" name="rating_2" value=3>
+                              <label for="rating3" style="font-size: 14px">3</label>
+                              <input id="rating2" type="radio" name="rating_2" value=4 >
+                              <label for="rating2" style="font-size: 14px">4</label>
+                              <input id="rating1" type="radio" name="rating_2" value=5>
+                              <label for="rating1" style="font-size: 14px">5</label>
+                              <input type="hidden" name="rating_2" value= 0 />
+                              </span>
+                           </p>
+                           <div class="d-flex justify-content-between align-items-center">
+                              <div class="btn-group">
+                                 <button type="button" class="btn btn-sm btn-outline-secondary" onclick=" window.open('http://www.imdb.com/title/tt0052077/','_blank')" target="_blank">IMDB</button>
+                              </div>
+                              <!--  <small class="text-muted">Horror</small> -->
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-md-3">
+                     <div class="card mb-4 box-shadow" style="width: 250px">
+                        <img class="card-img-top" src="https://image.ibb.co/fqLEkd/dumb_dumber.jpg" alt="Dumb_And_Dumber" height="300">
+                        <div class="card-body">
+                           <p class="card-text" >Dumb and Dumber</p>
+                           <input type="hidden" name="id_3" value=231>
+                           <input type="hidden" name="imdb_3" value='0109686'>
+                           <p>
+                              <span class="starRating">
+                              <input id="rating5" type="radio" name="rating_3" value=1>
+                              <label for="rating5" style="font-size: 14px">1</label>
+                              <input id="rating4" type="radio" name="rating_3" value=2>
+                              <label for="rating4" style="font-size: 14px">2</label>
+                              <input id="rating3" type="radio" name="rating_3" value=3>
+                              <label for="rating3" style="font-size: 14px">3</label>
+                              <input id="rating2" type="radio" name="rating_3" value=4>
+                              <label for="rating2" style="font-size: 14px">4</label>
+                              <input id="rating1" type="radio" name="rating_3" value=5>
+                              <label for="rating1" style="font-size: 14px">5</label>
+                              <input type="hidden" name="rating_3" value= 0 />
+                              </span>
+                           </p>
+                           <div class="d-flex justify-content-between align-items-center">
+                              <div class="btn-group">
+                                 <button type="button" class="btn btn-sm btn-outline-secondary" onclick=" window.open('http://www.imdb.com/title/tt0109686/','_blank')" target="_blank">IMDB</button>
+                              </div>
+                              <!--  <small class="text-muted">Horror</small> -->
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-md-3">
+                     <div class="card mb-4 box-shadow" style="width: 250px">
+                        <img class="card-img-top" src="https://image.ibb.co/kof5Qd/The_rocky_horror_picture_show_poster.jpg" alt="The_Rocky_Horror_Picture_Show" height="300">
+                        <div class="card-body">
+                           <p class="card-text" style="font-size: 14px">The Rocky Horror Picture Show</p>
+                           <input type="hidden" name="id_4" value=2657>
+                           <input type="hidden" name="imdb_4" value='0073629'>
+                           <p>
+                              <span class="starRating">
+                              <input id="rating5" type="radio" name="rating_4" value=1>
+                              <label for="rating5" style="font-size: 14px">1</label>
+                              <input id="rating4" type="radio" name="rating_4" value=2>
+                              <label for="rating4" style="font-size: 14px">2</label>
+                              <input id="rating3" type="radio" name="rating_4" value=3>
+                              <label for="rating3" style="font-size: 14px">3</label>
+                              <input id="rating2" type="radio" name="rating_4" value=4>
+                              <label for="rating2" style="font-size: 14px">4</label>
+                              <input id="rating1" type="radio" name="rating_4" value=5>
+                              <label for="rating1" style="font-size: 14px">5</label>
+                              <input type="hidden" name="rating_4" value= 0 />
+                              </span>
+                           </p>
+                           <div class="d-flex justify-content-between align-items-center">
+                              <div class="btn-group">
+                                 <button type="button" class="btn btn-sm btn-outline-secondary" onclick=" window.open('http://www.imdb.com/title/tt0073629/','_blank')" target="_blank">IMDB</button>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-md-3">
+                     <div class="card mb-4 box-shadow" style="width: 250px">
+                        <img class="card-img-top" src="https://image.ibb.co/d8kByy/natural_born_killers.jpg" alt="Natural_Born_Killers" height="300">
+                        <div class="card-body">
+                           <p class="card-text" style="font-size: 14px">Natural Born Killers</p>
+                           <input type="hidden" name="id_5" value=288>
+                           <input type="hidden" name="imdb_5" value='0110632'>
+                           <p>
+                              <span class="starRating">
+                              <input id="rating5" type="radio" name="rating_5" value=1>
+                              <label for="rating5" style="font-size: 14px">1</label>
+                              <input id="rating4" type="radio" name="rating_5" value=2>
+                              <label for="rating4" style="font-size: 14px">2</label>
+                              <input id="rating3" type="radio" name="rating_5" value=3 >
+                              <label for="rating3" style="font-size: 14px">3</label>
+                              <input id="rating2" type="radio" name="rating_5" value=4>
+                              <label for="rating2" style="font-size: 14px">4</label>
+                              <input id="rating1" type="radio" name="rating_5" value=5>
+                              <label for="rating1" style="font-size: 14px">5</label>
+                              <input type="hidden" name="rating_5" value= 0 />
+                              </span>
+                           </p>
+                           <div class="d-flex justify-content-between align-items-center">
+                              <div class="btn-group">
+                                 <button type="button" class="btn btn-sm btn-outline-secondary" onclick=" window.open('http://www.imdb.com/title/tt0110632/','_blank')" target="_blank">IMDB</button>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-md-3">
+                     <div class="card mb-4 box-shadow" style="width: 250px">
+                        <img class="card-img-top" src="https://image.ibb.co/gZyvrJ/south_park_bigger_longer_uncut_53e453dcbdb11.jpg" alt="South_Park_Bigger_Longer_Uncut" height="300">
+                        <div class="card-body">
+                           <p class="card-text" style="font-size: 14px">South Park</p>
+                           <input type="hidden" name="id_6" value=2700>
+                           <input type="hidden" name="imdb_6" value='0158983'>
+                           <p>
+                              <span class="starRating">
+                              <input id="rating5" type="radio" name="rating_6" value=1>
+                              <label for="rating5" style="font-size: 14px">1</label>
+                              <input id="rating4" type="radio" name="rating_6" value=2>
+                              <label for="rating4" style="font-size: 14px">2</label>
+                              <input id="rating3" type="radio" name="rating_6" value=3>
+                              <label for="rating3" style="font-size: 14px">3</label>
+                              <input id="rating2" type="radio" name="rating_6" value=4>
+                              <label for="rating2" style="font-size: 14px">4</label>
+                              <input id="rating1" type="radio" name="rating_6" value=5>
+                              <label for="rating1" style="font-size: 14px">5</label>
+                              <input type="hidden" name="rating_6" value= 0 />
+                              </span>
+                           </p>
+                           <div class="d-flex justify-content-between align-items-center">
+                              <div class="btn-group">
+                                 <button type="button" class="btn btn-sm btn-outline-secondary" onclick=" window.open('http://www.imdb.com/title/tt0158983/','_blank')" target="_blank">IMDB</button>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-md-3">
+                     <div class="card mb-4 box-shadow" style="width: 250px">
+                        <img class="card-img-top" src="https://image.ibb.co/meMbyy/eyes_wide_shut.jpg" alt="Eyes_Wide_Shut" height="300">
+                        <div class="card-body">
+                           <p class="card-text" style="font-size: 14px">Eyes Wide Shut</p>
+                           <input type="hidden" name="id_7" value=2712>
+                           <input type="hidden" name="imdb_7" value='0120663'>
+                           <p>
+                              <span class="starRating">
+                              <input id="rating5" type="radio" name="rating_7" value=1>
+                              <label for="rating5" style="font-size: 14px">1</label>
+                              <input id="rating4" type="radio" name="rating_7" value=2>
+                              <label for="rating4" style="font-size: 14px">2</label>
+                              <input id="rating3" type="radio" name="rating_7" value=3>
+                              <label for="rating3" style="font-size: 14px">3</label>
+                              <input id="rating2" type="radio" name="rating_7" value=4>
+                              <label for="rating2" style="font-size: 14px">4</label>
+                              <input id="rating1" type="radio" name="rating_7" value=5 >
+                              <label for="rating1" style="font-size: 14px">5</label>
+                              <input type="hidden" name="rating_7" value= 0 />
+                              </span>
+                           </p>
+                           <div class="d-flex justify-content-between align-items-center">
+                              <div class="btn-group">
+                                 <button type="button" class="btn btn-sm btn-outline-secondary" onclick=" window.open('http://www.imdb.com/title/tt0120663/','_blank')" target="_blank">IMDB</button>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-md-3">
+                     <div class="card mb-4 box-shadow" style="width: 250px">
+                        <img class="card-img-top" src="https://image.ibb.co/d82MWJ/Starship_Troopers_affiche.jpg" alt="Starship_Troopers" height="300">
+                        <div class="card-body">
+                           <p class="card-text" style="font-size: 14px">Starship Troopers</p>
+                           <input type="hidden" name="id_8" value=1676>
+                           <input type="hidden" name="imdb_8" value='0120201'>
+                           <p>
+                              <span class="starRating">
+                              <input id="rating5" type="radio" name="rating_8" value=1>
+                              <label for="rating5" style="font-size: 14px">1</label>
+                              <input id="rating4" type="radio" name="rating_8" value=2>
+                              <label for="rating4" style="font-size: 14px">2</label>
+                              <input id="rating3" type="radio" name="rating_8" value=3>
+                              <label for="rating3" style="font-size: 14px">3</label>
+                              <input id="rating2" type="radio" name="rating_8" value=4>
+                              <label for="rating2" style="font-size: 14px">4</label>
+                              <input id="rating1" type="radio" name="rating_8" value=5>
+                              <label for="rating1" style="font-size: 14px">5</label>
+                              <input type="hidden" name="rating_8" value= 0 />
+                              </span>
+                           </p>
+                           <div class="d-flex justify-content-between align-items-center">
+                              <div class="btn-group">
+                                 <button type="button" class="btn btn-sm btn-outline-secondary" onclick=" window.open('http://www.imdb.com/title/tt0120201/','_blank')" target="_blank">IMDB</button>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-md-3">
+                     <div class="card mb-4 box-shadow" style="width: 250px">
+                        <img class="card-img-top" src="https://image.ibb.co/ceUmyy/armageddon.jpg" alt="Armageddon" height="300">
+                        <div class="card-body">
+                           <p class="card-text" style="font-size: 14px">Armageddon</p>
+                           <input type="hidden" name="id_9" value=1917>
+                           <input type="hidden" name="imdb_9" value='0120591'>
+                           <p>
+                              <span class="starRating">
+                              <input id="rating5" type="radio" name="rating_9" value=1>
+                              <label for="rating5" style="font-size: 14px">1</label>
+                              <input id="rating4" type="radio" name="rating_9" value=2>
+                              <label for="rating4" style="font-size: 14px">2</label>
+                              <input id="rating3" type="radio" name="rating_9" value=3>
+                              <label for="rating3" style="font-size: 14px">3</label>
+                              <input id="rating2" type="radio" name="rating_9" value=4>
+                              <label for="rating2" style="font-size: 14px">4</label>
+                              <input id="rating1" type="radio" name="rating_9" value=5>
+                              <label for="rating1" style="font-size: 14px">5</label>
+                              <input type="hidden" name="rating_9" value= 0 />
+                              </span>
+                           </p>
+                           <div class="d-flex justify-content-between align-items-center">
+                              <div class="btn-group">
+                                 <button type="button" class="btn btn-sm btn-outline-secondary" onclick=" window.open('http://www.imdb.com/title/tt0120591/','_blank')" target="_blank">IMDB</button>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-md-3">
+                     <div class="card mb-4 box-shadow" style="width: 250px">
+                        <img class="card-img-top" src="https://image.ibb.co/g7njkd/titanic.jpg" alt="Titanic" height="300">
+                        <div class="card-body">
+                           <p class="card-text" style="font-size: 14px">Titanic</p>
+                           <input type="hidden" name="id_10" value=1721>
+                           <input type="hidden" name="imdb_10" value='0120338'>
+                           <p>
+                              <span class="starRating">
+                              <input id="rating5" type="radio" name="rating_10" value=1>
+                              <label for="rating5" style="font-size: 14px">1</label>
+                              <input id="rating4" type="radio" name="rating_10" value=2>
+                              <label for="rating4" style="font-size: 14px">2</label>
+                              <input id="rating3" type="radio" name="rating_10" value=3>
+                              <label for="rating3" style="font-size: 14px">3</label>
+                              <input id="rating2" type="radio" name="rating_10" value=4>
+                              <label for="rating2" style="font-size: 14px">4</label>
+                              <input id="rating1" type="radio" name="rating_10" value=5>
+                              <label for="rating1" style="font-size: 14px">5</label>
+                              <input type="hidden" name="rating_10" value= 0 />
+                              </span>
+                           </p>
+                           <div class="d-flex justify-content-between align-items-center">
+                              <div class="btn-group">
+                                 <button type="button" class="btn btn-sm btn-outline-secondary" onclick=" window.open('http://www.imdb.com/title/tt0120338/','_blank')" target="_blank">IMDB</button>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-md-3">
+                     <div class="card mb-4 box-shadow" style="width: 250px">
+                        <img class="card-img-top" src="https://image.ibb.co/eR1wWJ/thin_red_line.jpg" alt="The_Thin_Red_Line" height="300">
+                        <div class="card-body">
+                           <p class="card-text" style="font-size: 14px">The Thin Red Line</p>
+                           <input type="hidden" name="id_11" value=2427>
+                           <input type="hidden" name="imdb_11" value='0120863'>
+                           <p>
+                              <span class="starRating">
+                              <input id="rating5" type="radio" name="rating_11" value=1>
+                              <label for="rating5" style="font-size: 14px">1</label>
+                              <input id="rating4" type="radio" name="rating_11" value=2>
+                              <label for="rating4" style="font-size: 14px">2</label>
+                              <input id="rating3" type="radio" name="rating_11" value=3>
+                              <label for="rating3" style="font-size: 14px">3</label>
+                              <input id="rating2" type="radio" name="rating_11" value=4>
+                              <label for="rating2" style="font-size: 14px">4</label>
+                              <input id="rating1" type="radio" name="rating_11" value=5>
+                              <label for="rating1" style="font-size: 14px">5</label>
+                              <input type="hidden" name="rating_11" value= 0 />
+                              </span>
+                           </p>
+                           <div class="d-flex justify-content-between align-items-center">
+                              <div class="btn-group">
+                                 <button type="button" class="btn btn-sm btn-outline-secondary" onclick=" window.open('http://www.imdb.com/title/tt0120863/','_blank')" target="_blank">IMDB</button>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-md-3">
+                     <div class="card mb-4 box-shadow" style="width: 250px">
+                        <img class="card-img-top" src="https://image.ibb.co/dE7aQd/mars_attacks_dvd_cover.jpg" alt="Mars_Attacks" height="300">
+                        <div class="card-body">
+                           <p class="card-text" style="font-size: 14px">Mars Attacks!</p>
+                           <input type="hidden" name="id_12" value=1391>
+                           <input type="hidden" name="imdb_12" value='0116996'>
+                           <p>
+                              <span class="starRating">
+                              <input id="rating5" type="radio" name="rating_12" value=1>
+                              <label for="rating5" style="font-size: 14px">1</label>
+                              <input id="rating4" type="radio" name="rating_12" value=2>
+                              <label for="rating4" style="font-size: 14px">2</label>
+                              <input id="rating3" type="radio" name="rating_12" value=3>
+                              <label for="rating3" style="font-size: 14px">3</label>
+                              <input id="rating2" type="radio" name="rating_12" value=4 >
+                              <label for="rating2" style="font-size: 14px">4</label>
+                              <input id="rating1" type="radio" name="rating_12" value=5>
+                              <label for="rating1" style="font-size: 14px">5</label>
+                              <input type="hidden" name="rating_12" value= 0 />
+                              </span>
+                           </p>
+                           <div class="d-flex justify-content-between align-items-center">
+                              <div class="btn-group">
+                                 <button type="button" class="btn btn-sm btn-outline-secondary" onclick=" window.open('http://www.imdb.com/title/tt0116996/','_blank')" target="_blank">IMDB</button>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-md-3">
+                     <div class="card mb-4 box-shadow" style="width: 250px">
+                        <img class="card-img-top" src="https://image.ibb.co/gC5qrJ/bev_star_wars_segunda_trilogia_0_cartel.jpg" alt="Star_Wars_Episode_I" height="300">
+                        <div class="card-body">
+                           <p class="card-text" style="font-size: 14px">Star Wars: Episode I</p>
+                           <input type="hidden" name="id_13" value=2628>
+                           <input type="hidden" name="imdb_13" value='0120915'>
+                           <p>
+                              <span class="starRating">
+                              <input id="rating5" type="radio" name="rating_13" value=1>
+                              <label for="rating5" style="font-size: 14px">1</label>
+                              <input id="rating4" type="radio" name="rating_13" value=2 >
+                              <label for="rating4" style="font-size: 14px">2</label>
+                              <input id="rating3" type="radio" name="rating_13" value=3>
+                              <label for="rating3" style="font-size: 14px">3</label>
+                              <input id="rating2" type="radio" name="rating_13" value=4>
+                              <label for="rating2" style="font-size: 14px">4</label>
+                              <input id="rating1" type="radio" name="rating_13" value=5>
+                              <label for="rating1" style="font-size: 14px">5</label>
+                              <input type="hidden" name="rating_13" value= 0 />
+                              </span>
+                           </p>
+                           <div class="d-flex justify-content-between align-items-center">
+                              <div class="btn-group">
+                                 <button type="button" class="btn btn-sm btn-outline-secondary" onclick=" window.open('http://www.imdb.com/title/tt0120915/','_blank')" target="_blank">IMDB</button>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-md-3">
+                     <div class="card mb-4 box-shadow" style="width: 250px">
+                        <img class="card-img-top" src="https://image.ibb.co/na9YBJ/the_texas_chainsaw.jpg" alt="The_Texas_Chain_Saw_Massacre" height="300">
+                        <div class="card-body">
+                           <p class="card-text" style="font-size: 14px">The Texas Chain Saw Massacre</p>
+                           <input type="hidden" name="id_14" value=2459>
+                           <input type="hidden" name="imdb_14" value='0072271'>
+                           <p>
+                              <span class="starRating">
+                              <input id="rating5" type="radio" name="rating_14" value=1>
+                              <label for="rating5" style="font-size: 14px">1</label>
+                              <input id="rating4" type="radio" name="rating_14" value=2>
+                              <label for="rating4" style="font-size: 14px">2</label>
+                              <input id="rating3" type="radio" name="rating_14" value=3>
+                              <label for="rating3" style="font-size: 14px">3</label>
+                              <input id="rating2" type="radio" name="rating_14" value=4>
+                              <label for="rating2" style="font-size: 14px">4</label>
+                              <input id="rating1" type="radio" name="rating_14" value=5 >
+                              <label for="rating1" style="font-size: 14px">5</label>
+                              <input type="hidden" name="rating_14" value= 0 />
+                              </span>
+                           </p>
+                           <div class="d-flex justify-content-between align-items-center">
+                              <div class="btn-group">
+                                 <button type="button" class="btn btn-sm btn-outline-secondary" onclick=" window.open('http://www.imdb.com/title/tt0072271/','_blank')" target="_blank">IMDB</button>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-md-3">
+                     <div class="card mb-4 box-shadow" style="width: 250px">
+                        <img class="card-img-top" src="https://image.ibb.co/hPK5Qd/the_english_patient.jpg" alt="The_English_Patient" height="300">
+                        <div class="card-body">
+                           <p class="card-text" style="font-size: 14px">The English Patient</p>
+                           <input type="hidden" name="id_15" value=1183>
+                           <input type="hidden" name="imdb_15" value='0116209'>
+                           <p>
+                              <span class="starRating">
+                              <input id="rating5" type="radio" name="rating_15" value=1>
+                              <label for="rating5" style="font-size: 14px">1</label>
+                              <input id="rating4" type="radio" name="rating_15" value=2 >
+                              <label for="rating4" style="font-size: 14px">2</label>
+                              <input id="rating3" type="radio" name="rating_15" value=3>
+                              <label for="rating3" style="font-size: 14px">3</label>
+                              <input id="rating2" type="radio" name="rating_15" value=4>
+                              <label for="rating2" style="font-size: 14px">4</label>
+                              <input id="rating1" type="radio" name="rating_15" value=5>
+                              <label for="rating1" style="font-size: 14px">5</label>
+                              <input type="hidden" name="rating_15" value= 0 />
+                              </span>
+                           </p>
+                           <div class="d-flex justify-content-between align-items-center">
+                              <div class="btn-group">
+                                 <button type="button" class="btn btn-sm btn-outline-secondary" onclick=" window.open('http://www.imdb.com/title/tt0116209/','_blank')" target="_blank">IMDB</button>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-md-3">
+                     <div class="card mb-4 box-shadow" style="width: 250px">
+                        <img class="card-img-top" src="https://image.ibb.co/nR1PJy/austin_powers.jpg" alt="Austin_Powers" height="300">
+                        <div class="card-body">
+                           <p class="card-text" style="font-size: 14px">Austin Powers</p>
+                           <input type="hidden" name="id_16" value=2683>
+                           <input type="hidden" name="imdb_16" value='0145660'>
+                           <p>
+                              <span class="starRating">
+                              <input id="rating5" type="radio" name="rating_16" value=1>
+                              <label for="rating5" style="font-size: 14px">1</label>
+                              <input id="rating4" type="radio" name="rating_16" value=2>
+                              <label for="rating4" style="font-size: 14px">2</label>
+                              <input id="rating3" type="radio" name="rating_16" value=3>
+                              <label for="rating3" style="font-size: 14px">3</label>
+                              <input id="rating2" type="radio" name="rating_16" value=4>
+                              <label for="rating2" style="font-size: 14px">4</label>
+                              <input id="rating1" type="radio" name="rating_16" value=5 >
+                              <label for="rating1" style="font-size: 14px">5</label>
+                              <input type="hidden" name="rating_16" value= 0 />
+                              </span>
+                           </p>
+                           <div class="d-flex justify-content-between align-items-center">
+                              <div class="btn-group">
+                                 <button type="button" class="btn btn-sm btn-outline-secondary" onclick=" window.open('http://www.imdb.com/title/tt0145660/','_blank')" target="_blank">IMDB</button>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-md-3">
+                     <div class="card mb-4 box-shadow" style="width: 250px">
+                        <img class="card-img-top" src="https://image.ibb.co/dFGYdy/Scary_Movie_movie_poster.jpg" alt="Scary_Movie" height="300">
+                        <div class="card-body">
+                           <p class="card-text" style="font-size: 14px">Scary Movie</p>
+                           <input type="hidden" name="id_17" value=3785>
+                           <input type="hidden" name="imdb_17" value='0175142'>
+                           <p>
+                              <span class="starRating">
+                              <input id="rating5" type="radio" name="rating_17" value=1>
+                              <label for="rating5" style="font-size: 14px">1</label>
+                              <input id="rating4" type="radio" name="rating_17" value=2>
+                              <label for="rating4" style="font-size: 14px">2</label>
+                              <input id="rating3" type="radio" name="rating_17" value=3>
+                              <label for="rating3" style="font-size: 14px">3</label>
+                              <input id="rating2" type="radio" name="rating_17" value=4 >
+                              <label for="rating2" style="font-size: 14px">4</label>
+                              <input id="rating1" type="radio" name="rating_17" value=5>
+                              <label for="rating1" style="font-size: 14px">5</label>
+                              <input type="hidden" name="rating_17" value= 0 />
+                              </span>
+                           </p>
+                           <div class="d-flex justify-content-between align-items-center">
+                              <div class="btn-group">
+                                 <button type="button" class="btn btn-sm btn-outline-secondary" onclick=" window.open('http://www.imdb.com/title/tt0175142/','_blank')" target="_blank">IMDB</button>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-md-3">
+                     <div class="card mb-4 box-shadow" style="width: 250px">
+                        <img class="card-img-top" src="https://image.ibb.co/b6LRyy/babe.jpg" alt="Babe_Pig_in_the_City" height="300">
+                        <div class="card-body">
+                           <p class="card-text" style="font-size: 14px">Babe: Pig in the City</p>
+                           <input type="hidden" name="id_18" value=2384>
+                           <input type="hidden" name="imdb_18" value='0120595'>
+                           <p>
+                              <span class="starRating">
+                              <input id="rating5" type="radio" name="rating_18" value=1>
+                              <label for="rating5" style="font-size: 14px">1</label>
+                              <input id="rating4" type="radio" name="rating_18" value=2>
+                              <label for="rating4" style="font-size: 14px">2</label>
+                              <input id="rating3" type="radio" name="rating_18" value=3 >
+                              <label for="rating3" style="font-size: 14px">3</label>
+                              <input id="rating2" type="radio" name="rating_18" value=4>
+                              <label for="rating2" style="font-size: 14px">4</label>
+                              <input id="rating1" type="radio" name="rating_18" value=5>
+                              <label for="rating1" style="font-size: 14px">5</label>
+                              <input type="hidden" name="rating_18" value= 0 />
+                              </span>
+                           </p>
+                           <div class="d-flex justify-content-between align-items-center">
+                              <div class="btn-group">
+                                 <button type="button" class="btn btn-sm btn-outline-secondary" onclick=" window.open('http://www.imdb.com/title/tt0120595/','_blank')" target="_blank">IMDB</button>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-md-3">
+                     <div class="card mb-4 box-shadow" style="width: 250px">
+                        <img class="card-img-top" src="https://image.ibb.co/joTDdy/tank_girl.jpg" alt="Tank_Girl" height="300">
+                        <div class="card-body">
+                           <p class="card-text" style="font-size: 14px">Tank Girl</p>
+                           <input type="hidden" name="id_19" value=327>
+                           <input type="hidden" name="imdb_19" value='0114614'>
+                           <p>
+                              <span class="starRating">
+                              <input id="rating5" type="radio" name="rating_19" value=1>
+                              <label for="rating5" style="font-size: 14px">1</label>
+                              <input id="rating4" type="radio" name="rating_19" value=2 >
+                              <label for="rating4" style="font-size: 14px">2</label>
+                              <input id="rating3" type="radio" name="rating_19" value=3>
+                              <label for="rating3" style="font-size: 14px">3</label>
+                              <input id="rating2" type="radio" name="rating_19" value=4>
+                              <label for="rating2" style="font-size: 14px">4</label>
+                              <input id="rating1" type="radio" name="rating_19" value=5>
+                              <label for="rating1" style="font-size: 14px">5</label>
+                              <input type="hidden" name="rating_19" value= 0 />
+                              </span>
+                           </p>
+                           <div class="d-flex justify-content-between align-items-center">
+                              <div class="btn-group">
+                                 <button type="button" class="btn btn-sm btn-outline-secondary" onclick=" window.open('http://www.imdb.com/title/tt0114614/','_blank')" target="_blank">IMDB</button>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-md-3">
+                     <div class="card mb-4 box-shadow" style="width: 250px">
+                        <img class="card-img-top" src="https://image.ibb.co/bVSjkd/pee_wee_adventure.jpg" alt="Pee_wee_Big_Adventure" height="300">
+                        <div class="card-body">
+                           <p class="card-text" style="font-size: 14px">Pee-wee's Big Adventure</p>
+                           <input type="hidden" name="id_20" value=3608>
+                           <input type="hidden" name="imdb_20" value='0089791'>
+                           <p>
+                              <span class="starRating">
+                              <input id="rating5" type="radio" name="rating_20" value=1>
+                              <label for="rating5" style="font-size: 14px">1</label>
+                              <input id="rating4" type="radio" name="rating_20" value=2 >
+                              <label for="rating4" style="font-size: 14px">2</label>
+                              <input id="rating3" type="radio" name="rating_20" value=3>
+                              <label for="rating3" style="font-size: 14px">3</label>
+                              <input id="rating2" type="radio" name="rating_20" value=4>
+                              <label for="rating2" style="font-size: 14px">4</label>
+                              <input id="rating1" type="radio" name="rating_20" value=5>
+                              <label for="rating1" style="font-size: 14px">5</label>
+                              <input type="hidden" name="rating_20" value= 0 />
+                              </span>
+                           </p>
+                           <div class="d-flex justify-content-between align-items-center">
+                              <div class="btn-group">
+                                 <button type="button" class="btn btn-sm btn-outline-secondary" onclick=" window.open('http://www.imdb.com/title/tt0089791/','_blank')" target="_blank">IMDB</button>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-md-3">
+                     <div class="card mb-4 box-shadow" style="width: 250px">
+                        <img class="card-img-top" src="https://image.ibb.co/kPdwyy/from_dusk_till_dawn_15890.jpg" alt="From_Dusk_Till_Dawn" height="300">
+                        <div class="card-body">
+                           <p class="card-text" style="font-size: 14px">From Dusk Till Dawn</p>
+                           <input type="hidden" name="id_21" value=70>
+                           <input type="hidden" name="imdb_21" value='0116367'>
+                           <p>
+                              <span class="starRating">
+                              <input id="rating5" type="radio" name="rating_21" value=1>
+                              <label for="rating5" style="font-size: 14px">1</label>
+                              <input id="rating4" type="radio" name="rating_21" value=2>
+                              <label for="rating4" style="font-size: 14px">2</label>
+                              <input id="rating3" type="radio" name="rating_21" value=3>
+                              <label for="rating3" style="font-size: 14px">3</label>
+                              <input id="rating2" type="radio" name="rating_21" value=4 >
+                              <label for="rating2" style="font-size: 14px">4</label>
+                              <input id="rating1" type="radio" name="rating_21" value=5>
+                              <label for="rating1" style="font-size: 14px">5</label>
+                              <input type="hidden" name="rating_21" value= 0 />
+                              </span>
+                           </p>
+                           <div class="d-flex justify-content-between align-items-center">
+                              <div class="btn-group">
+                                 <button type="button" class="btn btn-sm btn-outline-secondary" onclick=" window.open('http://www.imdb.com/title/tt0116367/','_blank')" target="_blank">IMDB</button>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-md-3">
+                     <div class="card mb-4 box-shadow" style="width: 250px">
+                        <img class="card-img-top" src="https://image.ibb.co/m2r25d/face_off.jpg" alt="Face_Off" height="300">
+                        <div class="card-body">
+                           <p class="card-text" style="font-size: 14px">Face/Off</p>
+                           <input type="hidden" name="id_22" value=1573>
+                           <input type="hidden" name="imdb_22" value='0119094'>
+                           <p>
+                              <span class="starRating">
+                              <input id="rating5" type="radio" name="rating_22" value=1>
+                              <label for="rating5" style="font-size: 14px">1</label>
+                              <input id="rating4" type="radio" name="rating_22" value=2>
+                              <label for="rating4" style="font-size: 14px">2</label>
+                              <input id="rating3" type="radio" name="rating_22" value=3 >
+                              <label for="rating3" style="font-size: 14px">3</label>
+                              <input id="rating2" type="radio" name="rating_22" value=4>
+                              <label for="rating2" style="font-size: 14px">4</label>
+                              <input id="rating1" type="radio" name="rating_22" value=5>
+                              <label for="rating1" style="font-size: 14px">5</label>
+                              <input type="hidden" name="rating_22" value= 0 />
+                              </span>
+                           </p>
+                           <div class="d-flex justify-content-between align-items-center">
+                              <div class="btn-group">
+                                 <button type="button" class="btn btn-sm btn-outline-secondary" onclick=" window.open('http://www.imdb.com/title/tt0119094/','_blank')" target="_blank">IMDB</button>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-md-3">
+                     <div class="card mb-4 box-shadow" style="width: 250px">
+                        <img class="card-img-top" src="https://image.ibb.co/jbDArJ/El_Dia_De_La_Bestia_Alex_De_La_Iglesia_Espa_a_1995_POSTER002.jpg" alt="Day_Of_the_Beast" height="300">
+                        <div class="card-body">
+                           <p class="card-text" style="font-size: 14px">Day of the Beast</p>
+                           <input type="hidden" name="id_23" value=2483>
+                           <input type="hidden" name="imdb_23" value='0112922'>
+                           <p>
+                              <span class="starRating">
+                              <input id="rating5" type="radio" name="rating_23" value=1>
+                              <label for="rating5" style="font-size: 14px">1</label>
+                              <input id="rating4" type="radio" name="rating_23" value=2>
+                              <label for="rating4" style="font-size: 14px">2</label>
+                              <input id="rating3" type="radio" name="rating_23" value=3 >
+                              <label for="rating3" style="font-size: 14px">3</label>
+                              <input id="rating2" type="radio" name="rating_23" value=4>
+                              <label for="rating2" style="font-size: 14px">4</label>
+                              <input id="rating1" type="radio" name="rating_23" value=5>
+                              <label for="rating1" style="font-size: 14px">5</label>
+                              <input type="hidden" name="rating_23" value= 0 />
+                              </span>
+                           </p>
+                           <div class="d-flex justify-content-between align-items-center">
+                              <div class="btn-group">
+                                 <button type="button" class="btn btn-sm btn-outline-secondary" onclick=" window.open('http://www.imdb.com/title/tt0112922/','_blank')" target="_blank">IMDB</button>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-md-3">
+                     <div class="card mb-4 box-shadow" style="width: 250px">
+                        <img class="card-img-top" src="https://image.ibb.co/kN8rgJ/Duneposter.jpg" alt="Dune" height="300">
+                        <div class="card-body">
+                           <p class="card-text" style="font-size: 14px">Dune</p>
+                           <input type="hidden" name="id_24" value=2021>
+                           <input type="hidden" name="imdb_24" value='0087182'>
+                           <p>
+                              <span class="starRating">
+                              <input id="rating5" type="radio" name="rating_24" value=1>
+                              <label for="rating5" style="font-size: 14px">1</label>
+                              <input id="rating4" type="radio" name="rating_24" value=2>
+                              <label for="rating4" style="font-size: 14px">2</label>
+                              <input id="rating3" type="radio" name="rating_24" value=3>
+                              <label for="rating3" style="font-size: 14px">3</label>
+                              <input id="rating2" type="radio" name="rating_24" value=4 >
+                              <label for="rating2" style="font-size: 14px">4</label>
+                              <input id="rating1" type="radio" name="rating_24" value=5>
+                              <label for="rating1" style="font-size: 14px">5</label>
+                              <input type="hidden" name="rating_24" value= 0 />
+                              </span>
+                           </p>
+                           <div class="d-flex justify-content-between align-items-center">
+                              <div class="btn-group">
+                                 <button type="button" class="btn btn-sm btn-outline-secondary" onclick=" window.open('http://www.imdb.com/title/tt0087182/','_blank')" target="_blank">IMDB</button>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-md-3">
+                     <div class="card mb-4 box-shadow" style="width: 250px">
+                        <img class="card-img-top" src="https://image.ibb.co/bJ8DBJ/spaceballs_poster.jpg" alt="Spaceballs" height="300">
+                        <div class="card-body">
+                           <p class="card-text" style="font-size: 14px">Spaceballs</p>
+                           <input type="hidden" name="id_25" value=3033>
+                           <input type="hidden" name="imdb_25" value='0094012'>
+                           <p>
+                              <span class="starRating">
+                              <input id="rating5" type="radio" name="rating_25" value=1>
+                              <label for="rating5" style="font-size: 14px">1</label>
+                              <input id="rating4" type="radio" name="rating_25" value=2>
+                              <label for="rating4" style="font-size: 14px">2</label>
+                              <input id="rating3" type="radio" name="rating_25" value=3 >
+                              <label for="rating3" style="font-size: 14px">3</label>
+                              <input id="rating2" type="radio" name="rating_25" value=4>
+                              <label for="rating2" style="font-size: 14px">4</label>
+                              <input id="rating1" type="radio" name="rating_25" value=5>
+                              <label for="rating1" style="font-size: 14px">5</label>
+                              <input type="hidden" name="rating_25" value= 0 />
+                              </span>
+                           </p>
+                           <div class="d-flex justify-content-between align-items-center">
+                              <div class="btn-group">
+                                 <button type="button" class="btn btn-sm btn-outline-secondary" onclick=" window.open('http://www.imdb.com/title/tt0094012/','_blank')" target="_blank">IMDB</button>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-md-3">
+                     <div class="card mb-4 box-shadow" style="width: 250px">
+                        <img class="card-img-top" src="https://image.ibb.co/hmP3BJ/gojira.jpg" alt="gojira" height="300">
+                        <div class="card-body">
+                           <p class="card-text" style="font-size: 14px">Godzilla 2000</p>
+                           <input type="hidden" name="id_26" value=3864>
+                           <input type="hidden" name="imdb_26" value='0188640'>
+                           <p>
+                              <span class="starRating">
+                              <input id="rating5" type="radio" name="rating_26" value=1>
+                              <label for="rating5" style="font-size: 14px">1</label>
+                              <input id="rating4" type="radio" name="rating_26" value=2>
+                              <label for="rating4" style="font-size: 14px">2</label>
+                              <input id="rating3" type="radio" name="rating_26" value=3>
+                              <label for="rating3" style="font-size: 14px">3</label>
+                              <input id="rating2" type="radio" name="rating_26" value=4>
+                              <label for="rating2" style="font-size: 14px">4</label>
+                              <input id="rating1" type="radio" name="rating_26" value=5>
+                              <label for="rating1" style="font-size: 14px">5</label>
+                              <input type="hidden" name="rating_26" value= 0 />
+                              </span>
+                           </p>
+                           <div class="d-flex justify-content-between align-items-center">
+                              <div class="btn-group">
+                                 <button type="button" class="btn btn-sm btn-outline-secondary" onclick=" window.open('http://www.imdb.com/title/tt0188640/','_blank')" target="_blank">IMDB</button>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-md-3">
+                     <div class="card mb-4 box-shadow" style="width: 250px">
+                        <img class="card-img-top" src="https://image.ibb.co/juWEkd/bicentennial_man_poster.jpg" alt="Bicentennial_Man" height="300">
+                        <div class="card-body">
+                           <p class="card-text" style="font-size: 14px">Bicentennial Man</p>
+                           <input type="hidden" name="id_27" value=3156>
+                           <input type="hidden" name="imdb_27" value='0182789'>
+                           <p>
+                              <span class="starRating">
+                              <input id="rating5" type="radio" name="rating_27" value=1>
+                              <label for="rating5" style="font-size: 14px">1</label>
+                              <input id="rating4" type="radio" name="rating_27" value=2>
+                              <label for="rating4" style="font-size: 14px">2</label>
+                              <input id="rating3" type="radio" name="rating_27" value=3>
+                              <label for="rating3" style="font-size: 14px">3</label>
+                              <input id="rating2" type="radio" name="rating_27" value=4>
+                              <label for="rating2" style="font-size: 14px">4</label>
+                              <input id="rating1" type="radio" name="rating_27" value=5>
+                              <label for="rating1" style="font-size: 14px">5</label>
+                              <input type="hidden" name="rating_27" value= 0 />
+                              </span>
+                           </p>
+                           <div class="d-flex justify-content-between align-items-center">
+                              <div class="btn-group">
+                                 <button type="button" class="btn btn-sm btn-outline-secondary" onclick=" window.open('http://www.imdb.com/title/tt0182789/','_blank')" target="_blank">IMDB</button>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-md-3">
+                     <div class="card mb-4 box-shadow" style="width: 250px">
+                        <img class="card-img-top" src="https://image.ibb.co/dKSWWJ/billy_madison.jpg" alt="billy_madison" height="300">
+                        <div class="card-body">
+                           <p class="card-text" style="font-size: 14px">Billy Madison</p>
+                           <input type="hidden" name="id_28" value=216>
+                           <input type="hidden" name="imdb_28" value='0112508'>
+                           <p>
+                              <span class="starRating">
+                              <input id="rating5" type="radio" name="rating_28" value=1>
+                              <label for="rating5" style="font-size: 14px">1</label>
+                              <input id="rating4" type="radio" name="rating_28" value=2>
+                              <label for="rating4" style="font-size: 14px">2</label>
+                              <input id="rating3" type="radio" name="rating_28" value=3>
+                              <label for="rating3" style="font-size: 14px">3</label>
+                              <input id="rating2" type="radio" name="rating_28" value=4>
+                              <label for="rating2" style="font-size: 14px">4</label>
+                              <input id="rating1" type="radio" name="rating_28" value=5>
+                              <label for="rating1" style="font-size: 14px">5</label>
+                              <input type="hidden" name="rating_28" value= 0 />
+                              </span>
+                           </p>
+                           <div class="d-flex justify-content-between align-items-center">
+                              <div class="btn-group">
+                                 <button type="button" class="btn btn-sm btn-outline-secondary" onclick=" window.open('http://www.imdb.com/title/tt0112508/','_blank')" target="_blank">IMDB</button>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-md-3">
+                     <div class="card mb-4 box-shadow" style="width: 250px">
+                        <img class="card-img-top" src="https://image.ibb.co/fyLPkd/independence_day_official_movie_poster.jpg" alt="independence_day" height="300">
+                        <div class="card-body">
+                           <p class="card-text" style="font-size: 14px">Independence Day</p>
+                           <input type="hidden" name="id_29" value=780>
+                           <input type="hidden" name="imdb_29" value='0116629'>
+                           <p>
+                              <span class="starRating">
+                              <input id="rating5" type="radio" name="rating_29" value=1>
+                              <label for="rating5" style="font-size: 14px">1</label>
+                              <input id="rating4" type="radio" name="rating_29" value=2>
+                              <label for="rating4" style="font-size: 14px">2</label>
+                              <input id="rating3" type="radio" name="rating_29" value=3>
+                              <label for="rating3" style="font-size: 14px">3</label>
+                              <input id="rating2" type="radio" name="rating_29" value=4>
+                              <label for="rating2" style="font-size: 14px">4</label>
+                              <input id="rating1" type="radio" name="rating_29" value=5>
+                              <label for="rating1" style="font-size: 14px">5</label>
+                              <input type="hidden" name="rating_29" value= 0 />
+                              </span>
+                           </p>
+                           <div class="d-flex justify-content-between align-items-center">
+                              <div class="btn-group">
+                                 <button type="button" class="btn btn-sm btn-outline-secondary" onclick=" window.open('http://www.imdb.com/title/tt0116629/','_blank')" target="_blank">IMDB</button>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-md-3">
+                     <div class="card mb-4 box-shadow" style="width: 250px">
+                        <img class="card-img-top" src="https://image.ibb.co/iDD25d/american_psycho.jpg" alt="american_psycho" height="300">
+                        <div class="card-body">
+                           <p class="card-text" style="font-size: 14px">American Psycho</p>
+                           <input type="hidden" name="id_30" value=3535>
+                           <input type="hidden" name="imdb_30" value='0144084'>
+                           <p>
+                              <span class="starRating">
+                              <input id="rating5" type="radio" name="rating_30" value=1>
+                              <label for="rating5" style="font-size: 14px">1</label>
+                              <input id="rating4" type="radio" name="rating_30" value=2>
+                              <label for="rating4" style="font-size: 14px">2</label>
+                              <input id="rating3" type="radio" name="rating_30" value=3>
+                              <label for="rating3" style="font-size: 14px">3</label>
+                              <input id="rating2" type="radio" name="rating_30" value=4>
+                              <label for="rating2" style="font-size: 14px">4</label>
+                              <input id="rating1" type="radio" name="rating_30" value=5>
+                              <label for="rating1" style="font-size: 14px">5</label>
+                              <input type="hidden" name="rating_30" value= 0 />
+                              </span>
+                           </p>
+                           <div class="d-flex justify-content-between align-items-center">
+                              <div class="btn-group">
+                                 <button type="button" class="btn btn-sm btn-outline-secondary" onclick=" window.open('http://www.imdb.com/title/tt0144084/','_blank')" target="_blank">IMDB</button>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-md-3">
+                     <div class="card mb-4 box-shadow" style="width: 250px">
+                        <img class="card-img-top" src="https://image.ibb.co/mGyryy/dead_alive_movie_poster_1992_1020258021_1.jpg" alt="dead_alive" height="300">
+                        <div class="card-body">
+                           <p class="card-text" style="font-size: 14px">Dead Alive</p>
+                           <input type="hidden" name="id_31" value=1241>
+                           <input type="hidden" name="imdb_31" value='0103873'>
+                           <p>
+                              <span class="starRating">
+                              <input id="rating5" type="radio" name="rating_31" value=1>
+                              <label for="rating5" style="font-size: 14px">1</label>
+                              <input id="rating4" type="radio" name="rating_31" value=2>
+                              <label for="rating4" style="font-size: 14px">2</label>
+                              <input id="rating3" type="radio" name="rating_31" value=3>
+                              <label for="rating3" style="font-size: 14px">3</label>
+                              <input id="rating2" type="radio" name="rating_31" value=4>
+                              <label for="rating2" style="font-size: 14px">4</label>
+                              <input id="rating1" type="radio" name="rating_31" value=5>
+                              <label for="rating1" style="font-size: 14px">5</label>
+                              <input type="hidden" name="rating_31" value= 0 />
+                              </span>
+                           </p>
+                           <div class="d-flex justify-content-between align-items-center">
+                              <div class="btn-group">
+                                 <button type="button" class="btn btn-sm btn-outline-secondary" onclick=" window.open('http://www.imdb.com/title/tt0103873/','_blank')" target="_blank">IMDB</button>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-md-3">
+                     <div class="card mb-4 box-shadow" style="width: 250px">
+                        <img class="card-img-top" src="https://image.ibb.co/heG3dy/Patch_Adams_1998_movie_poster.jpg" alt="Patch_Adams" height="300">
+                        <div class="card-body">
+                           <p class="card-text" style="font-size: 14px">Patch Adams</p>
+                           <input type="hidden" name="id_32" value=2431>
+                           <input type="hidden" name="imdb_32" value='0129290'>
+                           <p>
+                              <span class="starRating">
+                              <input id="rating5" type="radio" name="rating_32" value=1>
+                              <label for="rating5" style="font-size: 14px">1</label>
+                              <input id="rating4" type="radio" name="rating_32" value=2>
+                              <label for="rating4" style="font-size: 14px">2</label>
+                              <input id="rating3" type="radio" name="rating_32" value=3>
+                              <label for="rating3" style="font-size: 14px">3</label>
+                              <input id="rating2" type="radio" name="rating_32" value=4>
+                              <label for="rating2" style="font-size: 14px">4</label>
+                              <input id="rating1" type="radio" name="rating_32" value=5>
+                              <label for="rating1" style="font-size: 14px">5</label>
+                              <input type="hidden" name="rating_32" value= 0 />
+                              </span>
+                           </p>
+                           <div class="d-flex justify-content-between align-items-center">
+                              <div class="btn-group">
+                                 <button type="button" class="btn btn-sm btn-outline-secondary" onclick=" window.open('http://www.imdb.com/title/tt0129290/','_blank')" target="_blank">IMDB</button>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-md-3">
+                     <div class="card mb-4 box-shadow" style="width: 250px">
+                        <img class="card-img-top" src="https://image.ibb.co/jWqk8y/toys.jpg" alt="toys" height="300">
+                        <div class="card-body">
+                           <p class="card-text" style="font-size: 14px">Toys</p>
+                           <input type="hidden" name="id_33" value=2253>
+                           <input type="hidden" name="imdb_33" value='0105629'>
+                           <p>
+                              <span class="starRating">
+                              <input id="rating5" type="radio" name="rating_33" value=1>
+                              <label for="rating5" style="font-size: 14px">1</label>
+                              <input id="rating4" type="radio" name="rating_33" value=2>
+                              <label for="rating4" style="font-size: 14px">2</label>
+                              <input id="rating3" type="radio" name="rating_33" value=3>
+                              <label for="rating3" style="font-size: 14px">3</label>
+                              <input id="rating2" type="radio" name="rating_33" value=4>
+                              <label for="rating2" style="font-size: 14px">4</label>
+                              <input id="rating1" type="radio" name="rating_33" value=5>
+                              <label for="rating1" style="font-size: 14px">5</label>
+                              <input type="hidden" name="rating_33" value= 0 />
+                              </span>
+                           </p>
+                           <div class="d-flex justify-content-between align-items-center">
+                              <div class="btn-group">
+                                 <button type="button" class="btn btn-sm btn-outline-secondary" onclick=" window.open('http://www.imdb.com/title/tt0105629/','_blank')" target="_blank">IMDB</button>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-md-3">
+                     <div class="card mb-4 box-shadow" style="width: 250px">
+                        <img class="card-img-top" src="https://image.ibb.co/iBTBgJ/bringing_out_the_dead_ukquad.jpg" alt="bringing_out_the_dead" height="300">
+                        <div class="card-body">
+                           <p class="card-text" style="font-size: 14px">Bringing out the Dead</p>
+                           <input type="hidden" name="id_34" value=2976>
+                           <input type="hidden" name="imdb_34" value='0163988'>
+                           <p>
+                              <span class="starRating">
+                              <input id="rating5" type="radio" name="rating_34" value=1>
+                              <label for="rating5" style="font-size: 14px">1</label>
+                              <input id="rating4" type="radio" name="rating_34" value=2>
+                              <label for="rating4" style="font-size: 14px">2</label>
+                              <input id="rating3" type="radio" name="rating_34" value=3>
+                              <label for="rating3" style="font-size: 14px">3</label>
+                              <input id="rating2" type="radio" name="rating_34" value=4>
+                              <label for="rating2" style="font-size: 14px">4</label>
+                              <input id="rating1" type="radio" name="rating_34" value=5>
+                              <label for="rating1" style="font-size: 14px">5</label>
+                              <input type="hidden" name="rating_34" value= 0 />
+                              </span>
+                           </p>
+                           <div class="d-flex justify-content-between align-items-center">
+                              <div class="btn-group">
+                                 <button type="button" class="btn btn-sm btn-outline-secondary" onclick=" window.open('http://www.imdb.com/title/tt0163988/','_blank')" target="_blank">IMDB</button>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-md-3">
+                     <div class="card mb-4 box-shadow" style="width: 250px">
+                        <img class="card-img-top" src="https://image.ibb.co/cXFz1J/magnolia.jpg" alt="magnolia" height="300">
+                        <div class="card-body">
+                           <p class="card-text" style="font-size: 14px">Magnolia</p>
+                           <input type="hidden" name="id_35" value=3160>
+                           <input type="hidden" name="imdb_35" value='0175880'>
+                           <p>
+                              <span class="starRating">
+                              <input id="rating5" type="radio" name="rating_35" value=1>
+                              <label for="rating5" style="font-size: 14px">1</label>
+                              <input id="rating4" type="radio" name="rating_35" value=2>
+                              <label for="rating4" style="font-size: 14px">2</label>
+                              <input id="rating3" type="radio" name="rating_35" value=3>
+                              <label for="rating3" style="font-size: 14px">3</label>
+                              <input id="rating2" type="radio" name="rating_35" value=4>
+                              <label for="rating2" style="font-size: 14px">4</label>
+                              <input id="rating1" type="radio" name="rating_35" value=5>
+                              <label for="rating1" style="font-size: 14px">5</label>
+                              <input type="hidden" name="rating_35" value= 0 />
+                              </span>
+                           </p>
+                           <div class="d-flex justify-content-between align-items-center">
+                              <div class="btn-group">
+                                 <button type="button" class="btn btn-sm btn-outline-secondary" onclick=" window.open('http://www.imdb.com/title/tt0175880/','_blank')" target="_blank">IMDB</button>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-md-3">
+                     <div class="card mb-4 box-shadow" style="width: 250px">
+                        <img class="card-img-top" src="https://image.ibb.co/m3hMgJ/idle_hands.jpg" alt="idle_hands" height="300">
+                        <div class="card-body">
+                           <p class="card-text" style="font-size: 14px">Idle Hands</p>
+                           <input type="hidden" name="id_36" value=2606>
+                           <input type="hidden" name="imdb_36" value='0138510'>
+                           <p>
+                              <span class="starRating">
+                              <input id="rating5" type="radio" name="rating_36" value=1>
+                              <label for="rating5" style="font-size: 14px">1</label>
+                              <input id="rating4" type="radio" name="rating_36" value=2>
+                              <label for="rating4" style="font-size: 14px">2</label>
+                              <input id="rating3" type="radio" name="rating_36" value=3>
+                              <label for="rating3" style="font-size: 14px">3</label>
+                              <input id="rating2" type="radio" name="rating_36" value=4>
+                              <label for="rating2" style="font-size: 14px">4</label>
+                              <input id="rating1" type="radio" name="rating_36" value=5>
+                              <label for="rating1" style="font-size: 14px">5</label>
+                              <input type="hidden" name="rating_36" value= 0 />
+                              </span>
+                           </p>
+                           <div class="d-flex justify-content-between align-items-center">
+                              <div class="btn-group">
+                                 <button type="button" class="btn btn-sm btn-outline-secondary" onclick=" window.open('http://www.imdb.com/title/tt0138510/','_blank')" target="_blank">IMDB</button>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-md-3">
+                     <div class="card mb-4 box-shadow" style="width: 250px">
+                        <img class="card-img-top" src="https://image.ibb.co/iLJNoy/The_Waterboy_movie_poster.jpg" alt="The_Waterboy" height="300">
+                        <div class="card-body">
+                           <p class="card-text" style="font-size: 14px">The Waterboy</p>
+                           <input type="hidden" name="id_37" value=2335>
+                           <input type="hidden" name="imdb_37" value='0120484'>
+                           <p>
+                              <span class="starRating">
+                              <input id="rating5" type="radio" name="rating_37" value=1>
+                              <label for="rating5" style="font-size: 14px">1</label>
+                              <input id="rating4" type="radio" name="rating_37" value=2>
+                              <label for="rating4" style="font-size: 14px">2</label>
+                              <input id="rating3" type="radio" name="rating_37" value=3>
+                              <label for="rating3" style="font-size: 14px">3</label>
+                              <input id="rating2" type="radio" name="rating_37" value=4>
+                              <label for="rating2" style="font-size: 14px">4</label>
+                              <input id="rating1" type="radio" name="rating_37" value=5>
+                              <label for="rating1" style="font-size: 14px">5</label>
+                              <input type="hidden" name="rating_37" value= 0 />
+                              </span>
+                           </p>
+                           <div class="d-flex justify-content-between align-items-center">
+                              <div class="btn-group">
+                                 <button type="button" class="btn btn-sm btn-outline-secondary" onclick=" window.open('http://www.imdb.com/title/tt0120484/','_blank')" target="_blank">IMDB</button>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-md-3">
+                     <div class="card mb-4 box-shadow" style="width: 250px">
+                        <img class="card-img-top" src="https://image.ibb.co/cY1Lad/dirty_dancing.jpg" alt="dirty_dancing" height="300">
+                        <div class="card-body">
+                           <p class="card-text" style="font-size: 14px">Dirty Dancing</p>
+                           <input type="hidden" name="id_38" value=1088>
+                           <input type="hidden" name="imdb_38" value='0092890'>
+                           <p>
+                              <span class="starRating">
+                              <input id="rating5" type="radio" name="rating_38" value=1>
+                              <label for="rating5" style="font-size: 14px">1</label>
+                              <input id="rating4" type="radio" name="rating_38" value=2>
+                              <label for="rating4" style="font-size: 14px">2</label>
+                              <input id="rating3" type="radio" name="rating_38" value=3>
+                              <label for="rating3" style="font-size: 14px">3</label>
+                              <input id="rating2" type="radio" name="rating_38" value=4>
+                              <label for="rating2" style="font-size: 14px">4</label>
+                              <input id="rating1" type="radio" name="rating_38" value=5>
+                              <label for="rating1" style="font-size: 14px">5</label>
+                              <input type="hidden" name="rating_38" value= 0 />
+                              </span>
+                           </p>
+                           <div class="d-flex justify-content-between align-items-center">
+                              <div class="btn-group">
+                                 <button type="button" class="btn btn-sm btn-outline-secondary" onclick=" window.open('http://www.imdb.com/title/tt0092890/','_blank')" target="_blank">IMDB</button>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-md-3">
+                     <div class="card mb-4 box-shadow" style="width: 250px">
+                        <img class="card-img-top" src="https://image.ibb.co/jMBiTy/serial_mom.jpg" alt="serial_mom" height="300">
+                        <div class="card-body">
+                           <p class="card-text" style="font-size: 14px">Serial Mom</p>
+                           <input type="hidden" name="id_39" value=532>
+                           <input type="hidden" name="imdb_39" value='0111127'>
+                           <p>
+                              <span class="starRating">
+                              <input id="rating5" type="radio" name="rating_39" value=1>
+                              <label for="rating5" style="font-size: 14px">1</label>
+                              <input id="rating4" type="radio" name="rating_39" value=2>
+                              <label for="rating4" style="font-size: 14px">2</label>
+                              <input id="rating3" type="radio" name="rating_39" value=3>
+                              <label for="rating3" style="font-size: 14px">3</label>
+                              <input id="rating2" type="radio" name="rating_39" value=4>
+                              <label for="rating2" style="font-size: 14px">4</label>
+                              <input id="rating1" type="radio" name="rating_39" value=5>
+                              <label for="rating1" style="font-size: 14px">5</label>
+                              <input type="hidden" name="rating_39" value= 0 />
+                              </span>
+                           </p>
+                           <div class="d-flex justify-content-between align-items-center">
+                              <div class="btn-group">
+                                 <button type="button" class="btn btn-sm btn-outline-secondary" onclick=" window.open('http://www.imdb.com/title/tt0111127/','_blank')" target="_blank">IMDB</button>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-md-3">
+                     <div class="card mb-4 box-shadow" style="width: 250px">
+                        <img class="card-img-top" src="https://image.ibb.co/hOkA8y/mission_impossible_2_poster.jpg" alt="mission_impossible_2" height="300">
+                        <div class="card-body">
+                           <p class="card-text" style="font-size: 14px">Mission: Impossible 2</p>
+                           <input type="hidden" name="id_40" value=3623>
+                           <input type="hidden" name="imdb_40" value='0120755'>
+                           <p>
+                              <span class="starRating">
+                              <input id="rating5" type="radio" name="rating_40" value=1>
+                              <label for="rating5" style="font-size: 14px">1</label>
+                              <input id="rating4" type="radio" name="rating_40" value=2>
+                              <label for="rating4" style="font-size: 14px">2</label>
+                              <input id="rating3" type="radio" name="rating_40" value=3>
+                              <label for="rating3" style="font-size: 14px">3</label>
+                              <input id="rating2" type="radio" name="rating_40" value=4>
+                              <label for="rating2" style="font-size: 14px">4</label>
+                              <input id="rating1" type="radio" name="rating_40" value=5>
+                              <label for="rating1" style="font-size: 14px">5</label>
+                              <input type="hidden" name="rating_40" value= 0 />
+                              </span>
+                           </p>
+                           <div class="d-flex justify-content-between align-items-center">
+                              <div class="btn-group">
+                                 <button type="button" class="btn btn-sm btn-outline-secondary" onclick=" window.open('http://www.imdb.com/title/tt0120755/','_blank')" target="_blank">IMDB</button>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <p></p>
+         <div style="text-align: center">
+            <button type="submit" id="test" class="btn btn-primary">Proceed</button>
+         </div>
+         <p></p>
+      </form>
+   </main>
+</div>
+<style type="text/css" scoped>
+   div#loading {
+   position: absolute;
+   left: 50%;
+   width: 300px;
+   height: 300px;
+   display: none;
+   background: url(/static/ajax-loader.gif) no-repeat;
+   cursor: wait;
+   top:0;
+   bottom: 0;
+   left: 0;
+   right: 0;
+   margin: auto;
+   text-align: center;
+   }
+   div#temp_id{
+   background-color: yellow;
+   }
+</style>
+<script>
+
+   $(document).ready(function () {
+     $('#test').click(function(){
+       check = $(':radio[name=rating_1]:checked, :radio[name=rating_2]:checked, :radio[name=rating_3]:checked, :radio[name=rating_4]:checked, :radio[name=rating_5]:checked, :radio[name=rating_6]:checked, :radio[name=rating_7]:checked, :radio[name=rating_8]:checked, :radio[name=rating_9]:checked, :radio[name=rating_10]:checked, :radio[name=rating_11]:checked, :radio[name=rating_12]:checked, :radio[name=rating_13]:checked, :radio[name=rating_14]:checked, :radio[name=rating_15]:checked,  :radio[name=rating_16]:checked, :radio[name=rating_17]:checked, :radio[name=rating_18]:checked, :radio[name=rating_19]:checked, :radio[name=rating_20]:checked, :radio[name=rating_21]:checked, :radio[name=rating_22]:checked, :radio[name=rating_23]:checked, :radio[name=rating_24]:checked, :radio[name=rating_25]:checked, :radio[name=rating_26]:checked, :radio[name=rating_27]:checked, :radio[name=rating_28]:checked, :radio[name=rating_29]:checked, :radio[name=rating_30]:checked, :radio[name=rating_31]:checked, :radio[name=rating_32]:checked, :radio[name=rating_33]:checked, :radio[name=rating_34]:checked, :radio[name=rating_35]:checked, :radio[name=rating_36]:checked, :radio[name=rating_37]:checked, :radio[name=rating_38]:checked, :radio[name=rating_39]:checked, :radio[name=rating_40]:checked')
+
+         if((check).length <= 19) {
+           alert('Please rate atleast 20 movies!!\n\nNumber of movies selected: ' + (check).length);
+           return false;
+         }
+
+         loading();
+
+     });
+   });
+
+   function loading(){
+               $("#loading").show();
+               $("#content").hide();
+               alert('The system will take a few seconds to generate an initial list of movie recommendations!')
+           }
+
+   var $checkboxes = $('#myform  input[type="radio"]');
+   $checkboxes.change(function(){
+      $('#count-checked-checkboxes').text($checkboxes.filter(':checked').length);
+  });
+
+
+
+</script>
+{% endblock %}
